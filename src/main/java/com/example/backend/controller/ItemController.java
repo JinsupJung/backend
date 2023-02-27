@@ -1,5 +1,8 @@
 package com.example.backend.controller;
 
+import com.example.backend.entity.Item;
+import com.example.backend.repository.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,12 +11,12 @@ import java.util.List;
 
 @RestController
 public class ItemController {
+    @Autowired
+    ItemRepository itemRepository;
     @GetMapping("/api/items")
-    public List<String> getItems() {
-        List<String> items = new ArrayList<>();
-        items.add("aaaa");
-        items.add("bbbb");
-        items.add("cccc");
+    public List<Item> getItems() {
+        List<Item> items = new ArrayList<>();
+        items = itemRepository.findAll();
         return items;
     }
 }
