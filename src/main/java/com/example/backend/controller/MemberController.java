@@ -4,6 +4,7 @@ import com.example.backend.entity.Member;
 import com.example.backend.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,7 @@ public class MemberController {
     MemberRepository memberRepository;
 
     @PostMapping("/api/account/login")
-    public int login(@RequestParam Map<String, String> params) {
+    public int login(@RequestBody Map<String, String> params) {
         Member member = memberRepository.findByEmailAndPassword(params.get("email"), params.get("password"));
 
         if (member != null) {
