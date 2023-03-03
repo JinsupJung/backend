@@ -60,4 +60,25 @@ public class CartController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/api/cart/items/{itemId}")
+    public ResponseEntity deleteCartItem(
+            @PathVariable("itemId") int itemId,
+            @CookieValue(value = "token", required = false) String token
+    ) {
+
+        if (!jwtService.isValid(token)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        int memberId = jwtService.getId(token);
+        Cart cart = cartRepository.findByMemberIdAndItemId(memberId, itemId);
+
+        if (cart != null) {
+            cartRepository.delete(cart);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
